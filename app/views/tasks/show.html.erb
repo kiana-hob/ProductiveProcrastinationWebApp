@@ -1,0 +1,177 @@
+<div>
+  <div>
+    <h1>
+      Task #<%= @the_task.id %> details
+    </h1>
+
+    <div>
+      <div>
+        <a href="/tasks">
+          Go back
+        </a>
+      </div>
+
+      <div>
+        <a href="/delete_task/<%= @the_task.id %>">
+          Delete task
+        </a>
+      </div>
+    </div>
+
+    <dl>
+      <dt>
+        User
+      </dt>
+      <dd>
+        <%= @the_task.user_id %>
+      </dd>
+
+      <dt>
+        Title
+      </dt>
+      <dd>
+        <%= @the_task.title %>
+      </dd>
+
+      <dt>
+        Description
+      </dt>
+      <dd>
+        <%= @the_task.description %>
+      </dd>
+
+      <dt>
+        Difficulty
+      </dt>
+      <dd>
+        <%= @the_task.difficulty %>
+      </dd>
+
+      <dt>
+        Deadline
+      </dt>
+      <dd>
+        <%= @the_task.deadline %>
+      </dd>
+
+      <dt>
+        Completion percentage
+      </dt>
+      <dd>
+        <%= @the_task.completion_percentage %>
+      </dd>
+
+      <dt>
+        Completion time
+      </dt>
+      <dd>
+        <%= @the_task.completion_time %>
+      </dd>
+
+      <dt>
+        Completed
+      </dt>
+      <dd>
+        <%= @the_task.completed %>
+      </dd>
+
+      <dt>
+        Created at
+      </dt>
+      <dd>
+        <%= time_ago_in_words(@the_task.created_at) %> ago
+      </dd>
+
+      <dt>
+        Updated at
+      </dt>
+      <dd>
+        <%= time_ago_in_words(@the_task.updated_at) %> ago
+      </dd>
+    </dl>
+  </div>
+</div>
+
+<hr>
+
+
+<div>
+  <div>
+    <h2>
+      Edit task
+    </h2>
+
+    <form action="/modify_task/<%= @the_task.id %>"  method="post" >
+      <div>
+        <label for="user_id_box">
+          User
+        </label>
+
+        <input type="text" id="user_id_box" name="query_user_id" value="<%= @the_task.user_id %>">
+      </div>
+
+      <div>
+        <label for="title_box">
+          Title
+        </label>
+
+        <input type="text" id="title_box" name="query_title" value="<%= @the_task.title %>">
+      </div>
+
+      <div>
+        <label for="description_box">
+          Description
+        </label>
+
+        <textarea id="description_box" name="query_description"><%= @the_task.description %></textarea>
+      </div>
+
+      <div>
+        <label for="difficulty_box">
+          Difficulty
+        </label>
+
+        <input type="text" id="difficulty_box" name="query_difficulty" value="<%= @the_task.difficulty %>">
+      </div>
+
+      <div>
+        <label for="deadline_box">
+          Deadline
+        </label>
+
+        <input type="datetime-local" id="deadline_box" name="query_deadline"
+         value="<%= @the_task.deadline %>">
+      </div>
+
+      <div>
+        <label for="completion_percentage_box">
+          Completion percentage
+        </label>
+
+        <input type="text" id="completion_percentage_box" name="query_completion_percentage" value="<%= @the_task.completion_percentage %>">
+      </div>
+
+      <div>
+        <label for="completion_time_box">
+          Completion time
+        </label>
+
+        <input type="text" id="completion_time_box" name="query_completion_time" value="<%= @the_task.completion_time %>">
+      </div>
+
+      <div>
+        <input type="checkbox" id="completed_box" name="query_completed" value="1" <%= "checked" if @the_task.completed %>>
+
+        <label for="completed_box">
+            Completed
+        </label>
+      </div>
+
+      <button>
+        Update task
+      </button>
+    </form>
+  </div>
+</div>
+
+<hr>
