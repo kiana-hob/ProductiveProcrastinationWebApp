@@ -6,6 +6,7 @@
 #  email           :string
 #  employed        :boolean
 #  password_digest :string
+#  phone           :string
 #  student         :boolean
 #  username        :string
 #  created_at      :datetime         not null
