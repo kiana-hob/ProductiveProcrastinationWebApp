@@ -1,0 +1,76 @@
+<div>
+  <div>
+    <h2>
+      Add a new task
+    </h2>
+
+    <form action="/insert_task" method="post">
+
+      <div>
+        <label for="title_box">
+          Task Name
+        </label>
+
+        <input type="text" id="title_box" name="query_title" required>
+      </div>
+
+      <div>
+        <label for="description_box">
+          Description
+        </label>
+
+        <textarea id="description_box" name="query_description" rows="3"></textarea>
+      </div>
+
+      <div>
+        <label for="difficulty_box">
+          Difficulty
+        </label>
+
+        <select type="text" id="difficulty_box" name="query_difficulty" required>
+          <option value="Easy">Easy</option>
+          <option value="Medium">Medium</option>
+          <option value="Hard">Hard</option>
+        </select> 
+      </div>
+
+      <div>
+        <label for="deadline_date">
+          Deadline
+        </label>
+
+        <input type="date" id="deadline_date" name="query_deadline_date" 
+          value="<%= @todays_date%>" min="<%= @todays_date%>">
+
+        <label for="deadline_time_box">
+          Deadline Time (24hr)
+        </label>
+
+ 
+        <input type="text" id="deadline_time_box" name="query_deadline_time" value="23:59">
+        
+      </div>
+
+
+      <div>
+        <label for="completion_time_hour_box" >
+          Estimated Completion Time Hour
+        </label>
+
+        <input type="text" id="completion_time_hour_box" name="query_completion_time_hour" required>
+
+        <label for="completion_time_min_box">
+          Estimated Completion Time Minutes
+        </label>
+
+        <input type="text" id="completion_time_box" name="query_completion_time_min" required>
+         
+      </div>
+
+
+      <button>
+        Create task
+      </button>
+    </form>
+  </div>
+</div>

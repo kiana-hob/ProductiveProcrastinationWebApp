@@ -1,8 +1,11 @@
 Rails.application.routes.draw do
-  
+  # edited pages
+
+  #######################################
   # Home page
   get("/", { :controller => "tasks", :action => "index" })
 
+  get("/new_task", {:controller => "tasks", :action => "new"})
   # Routes for the Task resource:
 
   # CREATE

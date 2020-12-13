@@ -1,196 +1,112 @@
-<div>
-  <div>
-    <h1>
-      List of all tasks
-    </h1>
-  </div>
+ <div class="container-fluid">
+      <div class="row">
+        <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+          <div class="sidebar-sticky">
+            <ul class="nav flex-column">
+              <h5>Recently Completed Tasks</h5>
+              <% @list_of_completed_tasks.each do |a_task| %>
+              <li>
+                <a href="/tasks/<%= a_task.id %>"><%= a_task.title%></a>
+              </li>
+              <% end %>
+            </ul>
+            
+
+          </div>
+        </nav>
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+          <div>
+            <div>
+              <h1>
+                Dashboard
+              </h1>
+            </div>
+          </div>
+
+          <hr>
+          <a class="btn btn-primary btn-lg" href="/new_task" role="button">Add a new task!</a>
+          <hr>
+
+          <div class="row">
+            <div class ="col-4">
+              <h1>Easy Tasks</h1>
+              <% @list_of_easy_tasks.each do |a_task|%>
+
+              <div class="jumbotron">
+                <h2 class="display-4"><%= a_task.title%></h2>
+                <% if a_task.deadline %>
+                  <p>Due: <%= a_task.deadline%></p>
+                <% else %>
+                  <p>No due date!</p>
+                <% end %>
+                <hr class="my-4">
+                <p class="lead"><%= a_task.description%></p>     
+                <div class ="row">
+                  <div class="col-6">
+                    <p class="lead">
+                      <a class="btn btn-primary btn-lg" href="/tasks/<%= a_task.id %>" role="button">More Info!</a>
+                    </p>
+                  </div>
+                  <div class="col-6">
+                    <p class="lead">
+                      <a class="btn btn-success btn-lg" href="/tasks/<%= a_task.id %>" role="button">Mark as Complete!</a>
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <% end %>
+            </div>
+
+            <div class ="col-4">
+              <h1>Medium Tasks</h1>
+              <% @list_of_medium_tasks.each do |a_task|%>
+
+              <div class="jumbotron">
+                <h1 class="display-4"><%= a_task.title%></h1>
+                <p class="lead"><%= a_task.description%></p>
+                <hr class="my-4">
+                <% if a_task.deadline %>
+                  <p>Due: <%= a_task.deadline%></p>
+                <% else %>
+                  <p>No due date!</p>
+                <% end %>
+                <p class="lead">
+                  <a class="btn btn-primary btn-lg" href="/tasks/<%= a_task.id %>" role="button">More Info!</a>
+                </p>
+              </div>
+              <% end %>
+            </div>
+
+            <div class ="col-4">
+              <h1>Hard Tasks</h1>
+              <% @list_of_hard_tasks.each do |a_task|%>
+
+              <div class="jumbotron">
+                <h1 class="display-4"><%= a_task.title%></h1>
+                <p class="lead"><%= a_task.description%></p>
+                <hr class="my-4">
+                <% if a_task.deadline %>
+                  <p>Due: <%= a_task.deadline%></p>
+                <% else %>
+                  <p>No due date!</p>
+                <% end %>
+                <div class ="row">
+                  <div class="col-6">
+                    <p class="lead">
+                      <a class="btn btn-primary btn-lg" href="/tasks/<%= a_task.id %>" role="button">More Info!</a>
+                    </p>
+                  </div>
+                  <div class="col-6">
+                    <p class="lead">
+                      <a class="btn btn-primary btn-lg" href="/tasks/<%= a_task.id %>" role="button">Mark as Complete!</a>
+                    </p>
+                  </div>
+                </div>
+                
+              </div>
+              <% end %>
+            </div>
+          </div>
+        </main>
+      </div>
 </div>
-
-<hr>
-
-<div>
-  <div>
-    <h2>
-      Add a new task
-    </h2>
-
-    <form action="/insert_task" method="post">
-      <div>
-        <label for="user_id_box">
-          User
-        </label>
-
-        <input type="text" id="user_id_box" name="query_user_id">
-      </div>
-
-      <div>
-        <label for="title_box">
-          Title
-        </label>
-
-        <input type="text" id="title_box" name="query_title">
-      </div>
-
-      <div>
-        <label for="description_box">
-          Description
-        </label>
-
-        <textarea id="description_box" name="query_description" rows="3"></textarea>
-      </div>
-
-      <div>
-        <label for="difficulty_box">
-          Difficulty
-        </label>
-
-        <input type="text" id="difficulty_box" name="query_difficulty">
-      </div>
-
-      <div>
-        <label for="deadline_box">
-          Deadline
-        </label>
-
-        <input type="datetime-local" id="deadline_box" name="query_deadline">
-      </div>
-
-      <div>
-        <label for="completion_percentage_box">
-          Completion percentage
-        </label>
-
-        <input type="text" id="completion_percentage_box" name="query_completion_percentage">
-      </div>
-
-      <div>
-        <label for="completion_time_box">
-          Completion time
-        </label>
-
-        <input type="text" id="completion_time_box" name="query_completion_time">
-      </div>
-
-      <div>
-        <input type="checkbox" id="completed_box" name="query_completed" value="1">
-
-        <label for="completed_box">Completed</label>
-      </div>
-
-      <button>
-        Create task
-      </button>
-    </form>
-  </div>
-</div>
-
-<hr>
-<div>
-  <div>
-    <table>
-      <tr>
-        <th>
-          ID
-        </th>
-
-        <th>
-          User
-        </th>
-
-        <th>
-          Title
-        </th>
-
-        <th>
-          Description
-        </th>
-
-        <th>
-          Difficulty
-        </th>
-
-        <th>
-          Deadline
-        </th>
-
-        <th>
-          Completion percentage
-        </th>
-
-        <th>
-          Completion time
-        </th>
-
-        <th>
-          Completed
-        </th>
-
-        <th>
-          Created at
-        </th>
-
-        <th>
-          Updated at
-        </th>
-
-        <th>
-        </th>
-      </tr>
-
-      <% @list_of_tasks.each do |a_task| %>
-      <tr>
-        <td>
-          <%= a_task.id %>
-        </td>
-
-        <td>
-          <%= a_task.user_id %>
-        </td>
-
-        <td>
-          <%= a_task.title %>
-        </td>
-
-        <td>
-          <%= a_task.description %>
-        </td>
-
-        <td>
-          <%= a_task.difficulty %>
-        </td>
-
-        <td>
-          <%= a_task.deadline %>
-        </td>
-
-        <td>
-          <%= a_task.completion_percentage %>
-        </td>
-
-        <td>
-          <%= a_task.completion_time %>
-        </td>
-
-        <td>
-          <%= a_task.completed %>
-        </td>
-
-        <td>
-          <%= time_ago_in_words(a_task.created_at) %> ago
-        </td>
-        <td>
-          <%= time_ago_in_words(a_task.updated_at) %> ago
-        </td>
-
-        <td>
-          <a href="/tasks/<%= a_task.id %>">
-            Show details
-          </a>
-        </td>
-      </tr>
-      <% end %>
-    </table>
-  </div>
-</div>
-
-<hr>
