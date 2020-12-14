@@ -18,8 +18,12 @@ class TasksController < ApplicationController
     # @start_timer = Time.now 
     # @current_timer = Time.now 
     # @working_time = @current_time - @start_time
-    
+    task_id = params.fetch("path_id")
+    the_task = Task.where({:id => task_id}).first
+    twilio_receiving_number = @current_user.phone
 
+    completion_time = (the_task.completion_time/60).to_s + " hours and " + (the_task.completion_time%60).to_s + " minutes to complete. Good Luck!"
+    twilio_message = "You've started working on the task: " + the_task.title + ". You estimated that it would take " + completion_time
 
     # Retrieve your credentials from secure storage
     twilio_sid = ENV.fetch("TWILIO_ACCOUNT_SID")
@@ -32,8 +36,8 @@ class TasksController < ApplicationController
     # Craft your SMS as a Hash with three keys
     sms_parameters = {
       :from => twilio_sending_number,
-      :to => "+13126323117", # Put your own phone number here if you want to see it in action
-      :body => "It's going to rain today — take an umbrella!"
+      :to => +13129754207,#twilio_receiving_number, # Put your own phone number here if you want to see it in action
+      :body => twilio_message
     }
 
     # Send your SMS!
