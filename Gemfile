@@ -14,6 +14,9 @@ gem 'sprockets', '< 4'
 gem 'sassc-rails'
 
 gem 'faker'
+gem "twilio-ruby"
+
+
 
 group :development do
   gem 'listen', '~> 3.2'

@@ -5,6 +5,44 @@ class TasksController < ApplicationController
     render({:template => "tasks/new_task.html.erb"})
   end
 
+  def completed 
+
+    task_id = params.fetch("path_id")
+    @matching_task = Task.where({:id => task_id}).first 
+    @matching_task.completed = true 
+    @matching_task.save
+    redirect_to("/tasks", { :notice => "Task completed!"} )
+  end
+
+  def start
+    # @start_timer = Time.now 
+    # @current_timer = Time.now 
+    # @working_time = @current_time - @start_time
+    
+
+
+    # Retrieve your credentials from secure storage
+    twilio_sid = ENV.fetch("TWILIO_ACCOUNT_SID")
+    twilio_token = ENV.fetch("TWILIO_AUTH_TOKEN")
+    twilio_sending_number = ENV.fetch("TWILIO_SENDING_PHONE_NUMBER")
+
+    # Create an instance of the Twilio Client and authenticate with your API key
+    twilio_client = Twilio::REST::Client.new(twilio_sid, twilio_token)
+
+    # Craft your SMS as a Hash with three keys
+    sms_parameters = {
+      :from => twilio_sending_number,
+      :to => "+13126323117", # Put your own phone number here if you want to see it in action
+      :body => "It's going to rain today — take an umbrella!"
+    }
+
+    # Send your SMS!
+    twilio_client.api.account.messages.create(sms_parameters)
+
+
+    redirect_to("/tasks", { :notice => "Task Started!"} )
+  end
+
 
   def index
     matching_tasks = @current_user.tasks
