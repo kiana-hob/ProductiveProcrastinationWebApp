@@ -17,8 +17,7 @@ require "sprockets/railtie"
 
 
 
-config.time_zone = 'Central Time (US & Canada)'
-config.active_record.default_timezone = :local
+
 
 
 # Require the gems listed in Gemfile, including any gems
@@ -40,6 +39,9 @@ module FinalProject
     
     config.action_controller.default_protect_from_forgery = false
     config.active_record.belongs_to_required_by_default = false
+
+    config.time_zone = 'Central Time (US & Canada)'
+    config.active_record.default_timezone = :local
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration can go into files in config/initializers
