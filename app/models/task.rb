@@ -10,6 +10,8 @@
 #  description           :text
 #  difficulty            :string
 #  title                 :string
+#  working               :boolean
+#  working_start_time    :datetime
 #  created_at            :datetime         not null
 #  updated_at            :datetime         not null
 #  user_id               :integer
