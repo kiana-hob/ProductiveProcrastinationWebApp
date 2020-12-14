@@ -8,7 +8,7 @@ task({:send_reminder => :environment}) do
   #user 
   the_user = User.where({:id => working_task.user_id}).first
   phone_number = the_user.phone
-  if time_passed % 30 == 0 and time_passed != 0:
+  if time_passed % 30 == 0 and time_passed != 0
   
     twilio_receiving_number = phone_number
 
@@ -32,4 +32,5 @@ task({:send_reminder => :environment}) do
 
     # Send your SMS!
     twilio_client.api.account.messages.create(sms_parameters)
+  end
 end
