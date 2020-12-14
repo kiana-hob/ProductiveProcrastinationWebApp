@@ -75,6 +75,7 @@ class TasksController < ApplicationController
     @list_of_completed_tasks = matching_tasks.where({ :completed => true}).order({ :updated_at => :desc})
 
     @working_task =  matching_tasks.where({ :working => true}).first
+    @dict_of_task = {"Easy" => @list_of_easy_tasks, "Medium" => @list_of_medium_tasks, "Hard" => @list_of_hard_tasks }
     render({ :template => "tasks/index.html.erb" })
   end
 

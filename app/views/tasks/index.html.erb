@@ -36,93 +36,45 @@
           <hr>
 
           <div class="row">
-            <div class ="col-4">
-              <h1 class="text-center">Easy Tasks</h1>
-              <% @list_of_easy_tasks.each do |a_task|%>
+            <% @dict_of_task.each do |type, list| %>
+              <div class ="col-4">
+                <h1 class="text-center"><%= type %> Tasks</h1>
+                <% list.each do |a_task|%>
 
-              <div class="jumbotron">
-                <h4 class="display-5"><a href="/tasks/<%= a_task.id %>"><%= a_task.title%></a></h4>
-                <% @current_task = a_task%>
-                <% if a_task.deadline %>
-                  <p>Due: <%= a_task.deadline.strftime("%a %e, %R")%></p>
-                <% else %>
-                  <p>No due date!</p>
-                <% end %>
-                <hr class="my-4">
-                <p>Notes: <%= a_task.description%></p>  
-                <p>Percent Complete: <%= a_task.completion_percentage %>%</p>   
-                <div class ="row">
-                  <div class="col-6">
-                    <p class="lead">
-                      <a class="btn btn-success btn-sm" href="/completed/<%= a_task.id %>" role="button">Mark as Complete!</a>
-                    </p>
-                  </div>
-                  <div class="col-6">
-                    <% if @working_task%>
-                      <!-- Button trigger modal -->
+                <div class="jumbotron">
+                  <h4 class="display-5"><a href="/tasks/<%= a_task.id %>"><%= a_task.title%></a></h4>
+                  <% @current_task = a_task%>
+                  <% if a_task.deadline %>
+                    <p>Due: <%= a_task.deadline.strftime("%a %e, %R")%></p>
+                  <% else %>
+                    <p>No due date!</p>
+                  <% end %>
+                  <hr class="my-4">
+                  <p>Notes: <%= a_task.description%></p>  
+                  <p>Percent Complete: <%= a_task.completion_percentage %>%</p>   
+                  <div class ="row">
+                    <div class="col-6">
                       <p class="lead">
-                        <a class="btn btn-primary btn-sm" role="button" data-toggle="modal" data-target="#exampleModal" href="/start_task/<%= a_task.id %>">Start Task!</a>
+                        <a class="btn btn-success btn-sm" href="/completed/<%= a_task.id %>" role="button">Mark as Complete!</a>
                       </p>
-                    <% else %>
-                      <p class="lead">
-                        <a class="btn btn-primary btn-sm" role="button" href="/start_task/<%= a_task.id %>">Start Task!</a>
-                      </p>
-                    <% end %>
+                    </div>
+                    <div class="col-6">
+                      <% if @working_task%>
+                        <!-- Button trigger modal -->
+                        <p class="lead">
+                          <a class="btn btn-primary btn-sm" role="button" data-toggle="modal" data-target="#exampleModal" href="/start_task/<%= a_task.id %>">Start Task!</a>
+                        </p>
+                      <% else %>
+                        <p class="lead">
+                          <a class="btn btn-primary btn-sm" role="button" href="/start_task/<%= a_task.id %>">Start Task!</a>
+                        </p>
+                      <% end %>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <% end %>
-            </div>
-
-            <div class ="col-4">
-              <h1>Medium Tasks</h1>
-              <% @list_of_medium_tasks.each do |a_task|%>
-
-              <div class="jumbotron">
-                <h1 class="display-4"><%= a_task.title%></h1>
-                <p class="lead"><%= a_task.description%></p>
-                <hr class="my-4">
-                <% if a_task.deadline %>
-                  <p>Due: <%= a_task.deadline%></p>
-                <% else %>
-                  <p>No due date!</p>
                 <% end %>
-                <p class="lead">
-                  <a class="btn btn-primary btn-lg" href="/tasks/<%= a_task.id %>" role="button">More Info!</a>
-                </p>
               </div>
-              <% end %>
-            </div>
-
-            <div class ="col-4">
-              <h1>Hard Tasks</h1>
-              <% @list_of_hard_tasks.each do |a_task|%>
-
-              <div class="jumbotron">
-                <h1 class="display-4"><%= a_task.title%></h1>
-                <p class="lead"><%= a_task.description%></p>
-                <hr class="my-4">
-                <% if a_task.deadline %>
-                  <p>Due: <%= a_task.deadline%></p>
-                <% else %>
-                  <p>No due date!</p>
-                <% end %>
-                <div class ="row">
-                  <div class="col-6">
-                    <p class="lead">
-                      <a class="btn btn-primary btn-lg" href="/tasks/<%= a_task.id %>" role="button">More Info!</a>
-                    </p>
-                  </div>
-                  <div class="col-6">
-                    <p class="lead">
-                      <a class="btn btn-primary btn-lg" href="/completed/<%= a_task.id %>" role="button">Mark as Complete!</a>
-                    </p>
-                  </div>
-                </div>
-                
-              </div>
-              <% end %>
-            </div>
+            <% end %>
           </div>
         </main>
       </div>
