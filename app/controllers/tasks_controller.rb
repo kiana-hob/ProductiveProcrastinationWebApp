@@ -20,6 +20,10 @@ class TasksController < ApplicationController
     # @working_time = @current_time - @start_time
     task_id = params.fetch("path_id")
     the_task = Task.where({:id => task_id}).first
+    the_task.working = true 
+    the_task.working_start_time = Time.now
+    the_task.save
+
     twilio_receiving_number = @current_user.phone
 
     completion_time = (the_task.completion_time/60).to_s + " hours and " + (the_task.completion_time%60).to_s + " minutes to complete. Good Luck!"
@@ -41,13 +45,24 @@ class TasksController < ApplicationController
     }
 
     # Send your SMS!
-    twilio_client.api.account.messages.create(sms_parameters)
+    # twilio_client.api.account.messages.create(sms_parameters)
 
 
     redirect_to("/tasks", { :notice => "Task Started!"} )
   end
 
 
+  def stop
+    task_id = params.fetch("path_id")
+    matching_tasks = Task.where({ :id => task_id })
+
+    @the_task = matching_tasks.at(0)
+    @the_task.working = false
+    @the_task.save
+
+    redirect_to("/tasks/#{@the_task.id}", { :notice => "You've stopped working on the task. Be sure to update the task information with your progress below!"} )
+  end
+  
   def index
     matching_tasks = @current_user.tasks
 
@@ -58,6 +73,8 @@ class TasksController < ApplicationController
     @list_of_hard_tasks = matching_tasks.where({ :difficulty => "Hard", :completed => false}).order({ :created_at => :desc })
 
     @list_of_completed_tasks = matching_tasks.where({ :completed => true}).order({ :updated_at => :desc})
+
+    @working_task =  matching_tasks.where({ :working => true}).first
     render({ :template => "tasks/index.html.erb" })
   end
 

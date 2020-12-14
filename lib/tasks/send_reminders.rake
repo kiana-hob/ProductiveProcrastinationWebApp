@@ -26,7 +26,7 @@ task({:send_reminder => :environment}) do
     # Craft your SMS as a Hash with three keys
     sms_parameters = {
       :from => twilio_sending_number,
-      :to => +13129754207,#twilio_receiving_number, # Put your own phone number here if you want to see it in action
+      :to => twilio_receiving_number, # Put your own phone number here if you want to see it in action
       :body => twilio_message
     }
 

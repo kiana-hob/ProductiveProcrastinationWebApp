@@ -10,6 +10,8 @@ Rails.application.routes.draw do
   get("/completed/:path_id", {:controller => "tasks", :action => "completed"})
 
   get("/start_task/:path_id", {:controller => "tasks", :action => "start"})
+
+  get("/stop/:path_id", {:controller => "tasks", :action => "stop"})
   # Routes for the Task resource:
 
   # CREATE

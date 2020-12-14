@@ -3,20 +3,20 @@
         <nav class="col-md-2 d-none d-md-block bg-light sidebar">
           <div class="sidebar-sticky">
             <ul class="nav flex-column">
-              <h5>Recently Completed Tasks</h5>
+              <h6>Recently Completed Tasks:</h6>
               <% @list_of_completed_tasks.each do |a_task| %>
               <li>
                 <a href="/tasks/<%= a_task.id %>"><%= a_task.title%></a>
               </li>
               <% end %>
             </ul>
-            
-
           </div>
         </nav>
+
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
-          <div>
-            <div>
+          
+          <div class="row">
+            <div class="col text-center">
               <h1>
                 Dashboard
               </h1>
@@ -24,37 +24,52 @@
           </div>
 
           <hr>
-          <a class="btn btn-primary btn-lg" href="/new_task" role="button">Add a new task!</a>
+          <h3>Current Task</h3>
+          <% if @working_task %>
+            <p>You are currently working on: <a href="/tasks/<%= @working_task.id %>"><%= @working_task.title%></a></p>
+            <p>Start time: <%= @working_task.working_start_time %> </p>
+            <a class="btn btn-danger btn-sm" href="/stop/<%= @working_task.id %>" role="button">Stop Working on Task</a>
+          <% else %>
+            <p>No current tasks. Get to working!</p>
+          <% end %>
+
           <hr>
 
           <div class="row">
             <div class ="col-4">
-              <h1>Easy Tasks</h1>
+              <h1 class="text-center">Easy Tasks</h1>
               <% @list_of_easy_tasks.each do |a_task|%>
 
               <div class="jumbotron">
-                <h2 class="display-4"><%= a_task.title%></h2>
+                <h4 class="display-5"><a href="/tasks/<%= a_task.id %>"><%= a_task.title%></a></h4>
+                <% @current_task = a_task%>
                 <% if a_task.deadline %>
-                  <p>Due: <%= a_task.deadline%></p>
+                  <p>Due: <%= a_task.deadline.strftime("%a %e, %R")%></p>
                 <% else %>
                   <p>No due date!</p>
                 <% end %>
                 <hr class="my-4">
-                <p class="lead"><%= a_task.description%></p>     
+                <p>Notes: <%= a_task.description%></p>  
+                <p>Percent Complete: <%= a_task.completion_percentage %>%</p>   
                 <div class ="row">
                   <div class="col-6">
                     <p class="lead">
-                      <a class="btn btn-primary btn-lg" href="/tasks/<%= a_task.id %>" role="button">More Info!</a>
+                      <a class="btn btn-success btn-sm" href="/completed/<%= a_task.id %>" role="button">Mark as Complete!</a>
                     </p>
                   </div>
                   <div class="col-6">
-                    <p class="lead">
-                      <a class="btn btn-success btn-lg" href="/completed/<%= a_task.id %>" role="button">Mark as Complete!</a>
-                    </p>
+                    <% if @working_task%>
+                      <!-- Button trigger modal -->
+                      <p class="lead">
+                        <a class="btn btn-primary btn-sm" role="button" data-toggle="modal" data-target="#exampleModal" href="/start_task/<%= a_task.id %>">Start Task!</a>
+                      </p>
+                    <% else %>
+                      <p class="lead">
+                        <a class="btn btn-primary btn-sm" role="button" href="/start_task/<%= a_task.id %>">Start Task!</a>
+                      </p>
+                    <% end %>
                   </div>
                 </div>
-                <!-- Button trigger modal -->
-                <a class="btn btn-primary btn-lg" role="button" data-toggle="modal" data-target="#staticBackdrop">Start Task!</a>
               </div>
               <% end %>
             </div>
@@ -113,23 +128,26 @@
       </div>
 </div>
 
+
 <!-- Modal -->
-<div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        ...
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Understood</button>
+<% if @working_task %>
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Task in progress</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Do you want to end your current task "<%= @working_task.title%>" to start working on "<%= @current_task.title%>"
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
       </div>
     </div>
   </div>
-</div>
+<% end %>
