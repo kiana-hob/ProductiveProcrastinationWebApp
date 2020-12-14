@@ -10,6 +10,7 @@ class TasksController < ApplicationController
     task_id = params.fetch("path_id")
     @matching_task = Task.where({:id => task_id}).first 
     @matching_task.completed = true 
+    @matching_task.completion_percentage = 100
     @matching_task.save
     redirect_to("/tasks", { :notice => "Task completed!"} )
   end
@@ -45,7 +46,7 @@ class TasksController < ApplicationController
     }
 
     # Send your SMS!
-    # twilio_client.api.account.messages.create(sms_parameters)
+    twilio_client.api.account.messages.create(sms_parameters)
 
 
     redirect_to("/tasks", { :notice => "Task Started!"} )
@@ -86,6 +87,7 @@ class TasksController < ApplicationController
 
     @the_task = matching_tasks.at(0)
 
+    @completion_time = (@the_task.completion_time/60).to_s + " hours and " + (@the_task.completion_time%60).to_s + " minutes"
     render({ :template => "tasks/show.html.erb" })
   end
 
@@ -95,23 +97,8 @@ class TasksController < ApplicationController
     the_task.title = params.fetch("query_title")
     the_task.description = params.fetch("query_description")
     the_task.difficulty = params.fetch("query_difficulty")
+    the_task.deadline = params.fetch("query_deadline")
 
-    # Convert form data and time to datetime data type
-    deadline_date = params.fetch("query_deadline_date").split("-")
-    deadline_time = params.fetch("query_deadline_time").split(":")
-    
-    if (deadline_date != nil)
-      year = deadline_date[0].to_i
-      month = deadline_date[1].to_i
-      day = deadline_date[2].to_i
-      hour = deadline_time[0].to_i
-      minute = deadline_time[1].to_i
-      if (deadline_time != nil)
-        the_task.deadline = DateTime.new(year, month, day, hour, minute)
-      else
-        the_task.deadline = DateTime.new(year, month, day, 23, 59)
-      end
-    end
 
 
     the_task.completion_percentage = 0
@@ -134,7 +121,7 @@ class TasksController < ApplicationController
     the_id = params.fetch("path_id")
     the_task = Task.where({ :id => the_id }).at(0)
 
-    the_task.user_id = params.fetch("query_user_id")
+    the_task.user_id = @current_user.id
     the_task.title = params.fetch("query_title")
     the_task.description = params.fetch("query_description")
     the_task.difficulty = params.fetch("query_difficulty")

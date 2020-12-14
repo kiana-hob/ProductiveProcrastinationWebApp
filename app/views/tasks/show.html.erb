@@ -1,26 +1,23 @@
 <div>
   <div>
     <h1>
-      Task: <%= @the_task.title %>
+      <%= @the_task.title %>
     </h1>
     <hr>
-        <a class="btn btn-primary btn-lg" href="/start_task/<%= @the_task.id%>" role="button">Add a new task!</a>
-      <hr>
-    <div>
-      <div>
-        <a href="/tasks">
-          Go back
-        </a>
-      </div>
-
-      <div>
-        <a href="/delete_task/<%= @the_task.id %>">
-          Delete task
-        </a>
-      </div>
-    </div>
+  <div>
+</div>
 
     <dl>
+      <dt>
+        Task Completion Status
+      </dt>
+      <dd>
+        <% if @the_task.completed %>
+          <p>Finished</p>
+        <% else %>
+          <p>Incomplete</p>
+        <% end %>
+      </dd>
       <dt>
         Description
       </dt>
@@ -38,29 +35,29 @@
       <dt>
         Deadline
       </dt>
-      <dd>
-        <%= @the_task.deadline %>
-      </dd>
-
+      <% if @the_task.deadline %>
+        <dd>
+          <%= @the_task.deadline %>
+        </dd>
+      <% else %>
+          <p>No deadline</p>
+      <% end %>
       <dt>
         Completion percentage
       </dt>
-      <dd>
-        <%= @the_task.completion_percentage %>
-      </dd>
+      <% if @the_task.completed %>
+        <dd>
+          100%
+        </dd>
+      <% else %>
+          <%= @the_task.completion_percentage %>%
+      <% end %>
 
       <dt>
         Completion time
       </dt>
       <dd>
-        <%= @the_task.completion_time %>
-      </dd>
-
-      <dt>
-        Completed
-      </dt>
-      <dd>
-        <%= @the_task.completed %>
+        <%= @completion_time %>
       </dd>
 
       <dt>
@@ -79,7 +76,11 @@
     </dl>
   </div>
 </div>
-
+      <div>
+        <a class="btn btn-danger btn-sm" role="button" href="/delete_task/<%= @the_task.id %>">
+          Remove task
+        </a>
+      </div>
 <hr>
 
 
@@ -90,14 +91,6 @@
     </h2>
 
     <form action="/modify_task/<%= @the_task.id %>"  method="post" >
-      <div>
-        <label for="user_id_box">
-          User
-        </label>
-
-        <input type="text" id="user_id_box" name="query_user_id" value="<%= @the_task.user_id %>">
-      </div>
-
       <div>
         <label for="title_box">
           Title
@@ -114,12 +107,16 @@
         <textarea id="description_box" name="query_description"><%= @the_task.description %></textarea>
       </div>
 
-      <div>
+       <div>
         <label for="difficulty_box">
           Difficulty
         </label>
 
-        <input type="text" id="difficulty_box" name="query_difficulty" value="<%= @the_task.difficulty %>">
+        <select type="text" id="difficulty_box" name="query_difficulty" required>
+          <option value="Easy">Easy</option>
+          <option value="Medium">Medium</option>
+          <option value="Hard">Hard</option>
+        </select> 
       </div>
 
       <div>

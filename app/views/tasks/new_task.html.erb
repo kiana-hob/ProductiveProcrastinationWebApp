@@ -39,31 +39,23 @@
           Deadline
         </label>
 
-        <input type="date" id="deadline_date" name="query_deadline_date" 
-          value="<%= @todays_date%>" min="<%= @todays_date%>">
-
-        <label for="deadline_time_box">
-          Deadline Time (24hr)
-        </label>
-
- 
-        <input type="text" id="deadline_time_box" name="query_deadline_time" value="23:59">
+       <input type="datetime-local" id="deadline_box" name="query_deadline">
         
       </div>
 
 
       <div>
         <label for="completion_time_hour_box" >
-          Estimated Completion Time Hour
+          Estimated Completion Time Hours
         </label>
 
-        <input type="text" id="completion_time_hour_box" name="query_completion_time_hour" required>
+        <input type="text" id="completion_time_hour_box" name="query_completion_time_hour" value ="0" required>
 
         <label for="completion_time_min_box">
           Estimated Completion Time Minutes
         </label>
 
-        <input type="text" id="completion_time_box" name="query_completion_time_min" required>
+        <input type="text" id="completion_time_box" name="query_completion_time_min" value ="30" required>
          
       </div>
 

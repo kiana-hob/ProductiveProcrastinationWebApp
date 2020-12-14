@@ -40,6 +40,7 @@ class UserAuthenticationController < ApplicationController
     @user = User.new
     @user.email = params.fetch("query_email")
     @user.password = params.fetch("query_password")
+    @user.phone = "+1" + params.fetch("query_phone")
     @user.password_confirmation = params.fetch("query_password_confirmation")
     @user.username = params.fetch("query_username")
     @user.student = params.fetch("query_student", false)
@@ -65,6 +66,7 @@ class UserAuthenticationController < ApplicationController
     @user.email = params.fetch("query_email")
     @user.password = params.fetch("query_password")
     @user.password_confirmation = params.fetch("query_password_confirmation")
+    @user.phone = "+1" + params.fetch("query_phone")
     @user.username = params.fetch("query_username")
     @user.student = params.fetch("query_student", false)
     @user.employed = params.fetch("query_employed", false)
