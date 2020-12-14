@@ -69,9 +69,9 @@ class TasksController < ApplicationController
 
     @list_of_tasks = matching_tasks.order({ :created_at => :desc })
     @todays_date = DateTime.now.to_date
-    @list_of_easy_tasks = matching_tasks.where({ :difficulty => "Easy", :completed => false}).order({ :created_at => :desc })
-    @list_of_medium_tasks = matching_tasks.where({ :difficulty => "Medium", :completed => false}).order({ :created_at => :desc })
-    @list_of_hard_tasks = matching_tasks.where({ :difficulty => "Hard", :completed => false}).order({ :created_at => :desc })
+    @list_of_easy_tasks = matching_tasks.where({ :difficulty => "Easy", :completed => false}).order({ :deadline => :asc })
+    @list_of_medium_tasks = matching_tasks.where({ :difficulty => "Medium", :completed => false}).order({ :deadline => :asc })
+    @list_of_hard_tasks = matching_tasks.where({ :difficulty => "Hard", :completed => false}).order({ :deadline => :asc })
 
     @list_of_completed_tasks = matching_tasks.where({ :completed => true}).order({ :updated_at => :desc})
 

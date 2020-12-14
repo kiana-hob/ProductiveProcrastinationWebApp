@@ -27,7 +27,7 @@
           <h3>Current Task</h3>
           <% if @working_task %>
             <p>You are currently working on: <a href="/tasks/<%= @working_task.id %>"><%= @working_task.title%></a></p>
-            <p>Start time: <%= @working_task.working_start_time %> </p>
+            <p>Start time: <%= @working_task.working_start_time.strftime("%a %e, %R, %p") %> </p>
             <a class="btn btn-danger btn-sm" href="/stop/<%= @working_task.id %>" role="button">Stop Working on Task</a>
           <% else %>
             <p>No current tasks. Get to working!</p>
@@ -45,7 +45,7 @@
                   <h4 class="display-5"><a href="/tasks/<%= a_task.id %>"><%= a_task.title%></a></h4>
                   <% @current_task = a_task%>
                   <% if a_task.deadline %>
-                    <p>Due: <%= a_task.deadline.strftime("%a %e, %R")%></p>
+                    <p>Due: <%= a_task.deadline.strftime("%a %e, %R, %p")%></p>
                   <% else %>
                     <p>No due date!</p>
                   <% end %>
